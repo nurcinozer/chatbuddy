@@ -1,0 +1,17 @@
+{
+  "name": "chatbuddy",
+  "description": "",
+  "main": "",
+  "authors": [
+    "nurçin özer <nurcinpiksel@outlook.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chat",
+    "nodejs"
+  ],
+  "homepage": "https://github.com/nurcinozer/chatbuddy",
+  "dependencies": {
+    "angular": "^1.7.9"
+  }
+}
