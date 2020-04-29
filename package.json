@@ -21,7 +21,8 @@
     "passport-google-oauth20": "^2.0.0",
     "pug": "^2.0.4",
     "redis": "^3.0.2",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "socket.io-redis": "^5.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
