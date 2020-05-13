@@ -3,12 +3,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const passport = require('passport');
 
 const session = require('express-session');
-const redis = require('redis');
-const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_URI, { auth_pass: process.env.REDIS_PASS });
-const RedisStore = require("connect-redis")(session);
+const passport = require('passport');
+const redisStore = require('./helpers/redisStore');
 
 const dotenv = require('dotenv');
 
@@ -37,13 +35,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
-//express-session
+// express-session
 app.use(session({
-    store: new RedisStore({ client: client, logErrors: true }),
+    store: redisStore,
     secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 14 * 24 * 360000 }
+    cookie: { maxAge: 14 * 24 * 3600000 }
 }));
 
 //passport.js
