@@ -1,5 +1,6 @@
 app.controller('chatController', ['$scope', ($scope) => {
     $scope.onlineList = [];
+    $scope.roomList = [];
     $scope.activeTab = 2;
 
     const socket = io.connect('http://localhost:3000');
@@ -7,6 +8,11 @@ app.controller('chatController', ['$scope', ($scope) => {
         $scope.onlineList = users;
         $scope.$apply();
     });
+
+    socket.on('roomList', rooms => {
+        $scope.roomList = rooms;
+        $scope.$apply();
+    })
 
     $scope.newRoom = () => {
         let randomName = Math.random().toString(36).substring(7);
