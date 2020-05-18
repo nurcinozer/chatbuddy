@@ -6,7 +6,8 @@ const socketApi = {};
 socketApi.io = io;
 
 //libs
-const Users = require('./lib/users');
+const Users = require('./lib/Users');
+const Rooms = require('./lib/Rooms');
 
 io.use(socketAuthorization);
 
@@ -24,6 +25,10 @@ io.on('connection', socket => {
 
     Users.list(users => {
         io.emit('onlineList', users);
+    });
+
+    socket.on('newRoom', roomName => {
+        Rooms.upsert(roomName);
     });
 
     socket.on('disconnect', () => {
