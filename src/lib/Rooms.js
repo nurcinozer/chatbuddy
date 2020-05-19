@@ -12,9 +12,9 @@ Rooms.prototype.upsert = function(name) {
 
     this.client.hset(
         'rooms',
-        '@Room' + newId,
+        '@Room:' + newId,
         JSON.stringify({
-            id: '@Room' + newId,
+            id: '@Room:' + newId,
             name,
             when: Date.now()
         }),

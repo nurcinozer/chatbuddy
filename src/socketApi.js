@@ -31,6 +31,10 @@ io.on('connection', socket => {
         io.emit('onlineList', users);
     });
 
+    socket.on('newMessage', data => {
+        console.log(data);
+    });
+
     socket.on('newRoom', roomName => {
         Rooms.upsert(roomName);
         Rooms.list(rooms => {
