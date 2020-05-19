@@ -1,4 +1,5 @@
 const shortid = require('shortid');
+const _ = require('lodash');
 const redisClient = require('../redisClient');
 
 function Messages() {
@@ -7,11 +8,12 @@ function Messages() {
 
 module.exports = new Messages();
 
-Messages.prototype.upsert = function({ roomId, message, username, surname }) {
+Messages.prototype.upsert = function({ roomId, userId, message, username, surname }) {
     this.client.hset(
         'messages:' + roomId,
         shortid.generate(),
         JSON.stringify({
+            userId,
             username,
             surname,
             message,
@@ -38,6 +40,6 @@ Messages.prototype.list = function(roomId, callback) {
             messageList.push(JSON.parse(messages[message]));
         }
 
-        return callback(messageList);
+        return callback(_.orderBy(messageList, 'when', 'asc'));
     })
 };
