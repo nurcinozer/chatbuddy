@@ -3,12 +3,12 @@ const _ = require('lodash');
 const redisClient = require('../redisClient');
 
 function Messages() {
-    this.client = redisClient.getClient();
+    this.client = redisClient.getClient()
 }
 
 module.exports = new Messages();
 
-Messages.prototype.upsert = function({ roomId, userId, message, username, surname }) {
+Messages.prototype.upsert = function({ roomId, message, userId, username, surname }) {
     this.client.hset(
         'messages:' + roomId,
         shortid.generate(),

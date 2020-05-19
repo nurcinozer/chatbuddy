@@ -5,30 +5,30 @@ append stylesheets
 
 block content
   div(ng-controller="chatController")
-    doctype html
     .wrapper
       .container
         .left
           .top
             ul.tab
               li.conversations(ng-click="changeTab(1)")
-                a(ng-class="{ active:  activeTab === 1 }") Chats
+                a(ng-class="{active: activeTab === 1}") Chats
               li.onlineUsers(ng-click="changeTab(2)")
-                a(ng-class="{ active:  activeTab === 2 }")  Online Users
+                a(ng-class="{active: activeTab === 2}") Online Users
 
           .tabArea
-            .tab-left(ng-show="activeTab === 1")      
+            .tab-left(ng-show="activeTab === 1")
               ul.people
                 li.person(
-                  ng-repeat="room in roomList"
+                  ng-repeat="room in roomList",
                   ng-click="switchRoom(room)"
-                  )
+                )
                   span.name {{ room.name }}
+
             .tab-right(ng-show="activeTab === 2")
-               ul.people
+              ul.people
                 li.person(ng-repeat="user in onlineList")
                   img(ng-src="{{ user.meta.profilePhotoUrl }}")
-                  span.name {{ user.meta.name }} {{ user.meta.username }}
+                  span.name {{ user.meta.name }} {{ user.meta.surname }}
                   span.preview &nbsp;
           .bottom
             button(ng-click="newRoom()") New Room
@@ -36,28 +36,21 @@ block content
           .top
             span
               span.name {{ chatName }}
-          .chat.active-chat
-            .bubble.you
-              span Hakan Aydın
-              | Hello, can you hear me?
-            .bubble.you
-              span Hakan Aydın
-              | I'm in California dreaming
-            .bubble.me ... about who we used to be.
-            .bubble.me Are you serious?
-            .bubble.you
-              span Hakan Aydın
-              | When we were younger and free...
-            .bubble.you
-              span Hakan Aydın
-              | I've forgotten how it felt before
-          .write
+          .loading(ng-show="loadingMessages") Loading...
+          .chat.active-chat(ng-show="!loadingMessages")
+            .bubble(
+              ng-repeat="data in messages[roomId]",
+              ng-class="{false: 'you', true: 'me'}[data.userId == user._id]"
+            )
+              span {{ data.name }} {{ data.surname }}
+              | {{ data.message }}
+          .write(ng-show="!loadingMessages")
             form(ng-submit="newMessage()")
               input(type='text', ng-model="message")
               a.write-link.send(ng-click="newMessage()")
 
-
 append javascripts
-  script(src="http://localhost:3000/socket.io/socket.io.js")
+  script(src="/socket.io/socket.io.js")
+  script(src="/javascripts/services/userFactory.js")
   script(src="/javascripts/services/chatFactory.js")
   script(src="/javascripts/controller/chatController.js")
