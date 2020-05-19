@@ -42,7 +42,7 @@ block content
               ng-repeat="data in messages[roomId]",
               ng-class="{false: 'you', true: 'me'}[data.userId == user._id]"
             )
-              span {{ data.name }} {{ data.surname }}
+              span {{ data.username }} {{ data.surname }}
               | {{ data.message }}
           .write(ng-show="!loadingMessages")
             form(ng-submit="newMessage()")
