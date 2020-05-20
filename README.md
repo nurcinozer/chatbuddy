@@ -1,6 +1,6 @@
 # ChatBuddy
 
-ChatBuddy is a simple chat application implemented using Node.js, Express, Socket.IO and Angular.
+💬 ChatBuddy is a simple chat application implemented using Node.js, Express, Socket.IO and Angular.
 
 ## Installation
 
